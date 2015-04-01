@@ -39,7 +39,8 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'rest_framework'
+    'rest_framework',
+    'videos'
 )
 
 MIDDLEWARE_CLASSES = (
@@ -96,6 +97,6 @@ STATICFILES_DIRS = (
 
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': (
-        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly',
+        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOn',
     )
 }

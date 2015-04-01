@@ -1,11 +1,32 @@
-from django.template import RequestContext, loader
-from django.shortcuts import render
+from django.http import Http404
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
 
-from models import Banner
+from models import Banner, Gender
+from serializers import BannerSerializer, GenderSerializer
 
-def index(request):
-    banners = Banner.objects.all()
-    context = {
-        'banners': banners
-    }
-    return render(request, 'index.html', context)
+class VideoList(APIView):
+
+    def get(self, request, format=None):
+        videos = Banner.objects.all()
+        serializer = BannerSerializer(videos, many=True)
+        return Response(serializer.data)
+        pass
+
+    def post(self, request, format=None):
+        pass
+
+class VideoDetail(APIView):
+
+    def get(self, request, pk, format=None):
+        videos = Banner.objects.all()
+        serializer = BannerSerializer(videos, many=True)
+        return Response(serializer.data)
+        pass
+
+    def put(self, request, pk, format=None):
+        pass
+
+    def delete(self, request, pk, format=None):
+        pass
