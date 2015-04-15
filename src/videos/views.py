@@ -1,32 +1,21 @@
-from django.http import Http404
-from rest_framework.views import APIView
-from rest_framework.response import Response
-from rest_framework import status
+from rest_framework import viewsets
 
 from models import Banner, Gender
 from serializers import BannerSerializer, GenderSerializer
+from .tasks import move_video
+from django.conf import settings
 
-class VideoList(APIView):
+class VideoViewSet(viewsets.ModelViewSet):
+    queryset = Banner.objects.all()
+    serializer_class = BannerSerializer
 
-    def get(self, request, format=None):
-        videos = Banner.objects.all()
-        serializer = BannerSerializer(videos, many=True)
-        return Response(serializer.data)
+    def perform_create(self, serializer):
+        super(VideoViewSet, self).perform_create(serializer)
+        url = serializer.data['url']
+        move_video.delay(settings.MEDIA_ROOT+url.split('/')[-1], serializer.data['id'])
         pass
 
-    def post(self, request, format=None):
-        pass
 
-class VideoDetail(APIView):
-
-    def get(self, request, pk, format=None):
-        videos = Banner.objects.all()
-        serializer = BannerSerializer(videos, many=True)
-        return Response(serializer.data)
-        pass
-
-    def put(self, request, pk, format=None):
-        pass
-
-    def delete(self, request, pk, format=None):
-        pass
+class GenderViewSet(viewsets.ModelViewSet):
+    queryset = Gender.objects.all()
+    serializer_class = GenderSerializer

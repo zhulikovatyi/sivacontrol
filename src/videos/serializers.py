@@ -3,9 +3,10 @@ from rest_framework import serializers
 from models import Banner, Gender
 
 class BannerSerializer(serializers.ModelSerializer):
+    genders = serializers.PrimaryKeyRelatedField(many=True, queryset=Gender.objects.all())
     class Meta:
         model = Banner
-        fields = ('id', 'title', 'url')
+        fields = ('id', 'title', 'url', 'genders')
 
 class GenderSerializer(serializers.ModelSerializer):
     class Meta:

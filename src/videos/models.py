@@ -11,8 +11,10 @@ class Gender(models.Model):
 
 class Banner(models.Model):
     title = models.CharField(max_length=128)
-    url = models.CharField(max_length=256)
+    # url = models.CharField(max_length=256)
     genders = models.ManyToManyField(Gender)
+    url = models.FileField()
+    is_active = models.BooleanField(default=False)
 
     def __str__(self):
         return "%s %s" % (self.title, self.url)
