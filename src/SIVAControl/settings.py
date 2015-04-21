@@ -26,7 +26,7 @@ DEBUG = True
 TEMPLATE_DEBUG = True
 TEMPLATE_DIRS = [os.path.join(BASE_DIR, 'templates')]
 
-ALLOWED_HOSTS = ['192.168.1.113']
+ALLOWED_HOSTS = ['192.168.1.65', 'localhost']
 # ALLOWED_HOSTS = []
 
 
@@ -122,4 +122,4 @@ JWT_AUTH = {
 }
 
 MEDIA_ROOT = BASE_DIR+"/videos/upload/"
-MEDIA_URL = "http://192.168.1.78/"
+MEDIA_URL = "/rtmp://192.168.1.78/"

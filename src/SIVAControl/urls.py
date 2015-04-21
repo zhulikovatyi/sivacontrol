@@ -3,6 +3,8 @@ from django.contrib import admin
 from django.contrib.auth.models import User
 from rest_framework import routers, serializers, viewsets
 from videos.views import VideoViewSet, GenderViewSet
+from django.conf import settings
+from django.conf.urls.static import static
 
 # Serializers define the API representation/
 class UserSerializer(serializers.HyperlinkedModelSerializer):
@@ -28,4 +30,4 @@ urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
     url(r'^api/token/auth$', 'rest_framework_jwt.views.obtain_jwt_token'),
     url(r'^api/token/refresh$', 'rest_framework_jwt.views.refresh_jwt_token'),
-)
+) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

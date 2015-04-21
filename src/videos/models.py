@@ -11,9 +11,8 @@ class Gender(models.Model):
 
 class Banner(models.Model):
     title = models.CharField(max_length=128)
-    # url = models.CharField(max_length=256)
     genders = models.ManyToManyField(Gender)
-    url = models.FileField()
+    url = models.CharField(validators=[], max_length=256, default="Coming soon ...")
     is_active = models.BooleanField(default=False)
 
     def __str__(self):
