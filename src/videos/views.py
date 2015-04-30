@@ -2,7 +2,7 @@ from rest_framework import viewsets
 
 from models import Banner, Gender
 from serializers import BannerSerializer, GenderSerializer
-from .tasks import move_video
+from .tasks import move_video, remove_video
 from django.conf import settings
 from rest_framework.response import Response
 from rest_framework import status
@@ -27,9 +27,9 @@ class VideoViewSet(viewsets.ModelViewSet):
         move_video.delay(settings.MEDIA_ROOT+self.file_name, serializer.data['id'])
 
     def perform_destroy(self, instance):
-        print instance.url
-        # instance.delete()
-        pass
+        movie_name = instance.url.split('/')[-1]
+        instance.delete()
+        remove_video.delay(movie_name)
 
 
 class GenderViewSet(viewsets.ModelViewSet):

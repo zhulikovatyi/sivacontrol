@@ -4,6 +4,7 @@ from .models import Banner
 import requests
 import os
 
+
 @shared_task
 def move_video(path_to_video, identity):
     r = requests.post(
@@ -18,3 +19,14 @@ def move_video(path_to_video, identity):
     )
     os.remove(path_to_video)
     return result
+
+
+@shared_task
+def remove_video(video_name):
+    r = requests.delete(
+        "http://192.168.1.78:8888/movie",
+        data={
+            'movie_name': video_name
+        }
+    )
+    return r
