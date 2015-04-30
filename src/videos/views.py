@@ -26,6 +26,11 @@ class VideoViewSet(viewsets.ModelViewSet):
         url = serializer.data['url']
         move_video.delay(settings.MEDIA_ROOT+self.file_name, serializer.data['id'])
 
+    def perform_destroy(self, instance):
+        print instance.url
+        # instance.delete()
+        pass
+
 
 class GenderViewSet(viewsets.ModelViewSet):
     queryset = Gender.objects.all()
