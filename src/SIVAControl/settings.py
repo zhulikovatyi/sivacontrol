@@ -59,6 +59,17 @@ ROOT_URLCONF = 'SIVAControl.urls'
 
 WSGI_APPLICATION = 'SIVAControl.wsgi.application'
 CORS_ORIGIN_ALLOW_ALL = True
+CORS_ALLOW_HEADERS = (
+    'x-requested-with',
+    'content-type',
+    'accept',
+    'origin',
+    'authorization',
+    'x-csrftoken',
+    'x-file-name',
+    'x-file-size',
+    'x-file-type'
+)
 
 
 # Database
@@ -98,7 +109,6 @@ STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
 )
 
-
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': (
         'rest_framework.permissions.IsAuthenticated',
@@ -112,6 +122,7 @@ REST_FRAMEWORK = {
         'rest_framework.parsers.MultiPartParser',
         'rest_framework.parsers.JSONParser',
         'rest_framework.parsers.FormParser',
+        'rest_framework.parsers.FileUploadParser',
     ),
     'PAGE_SIZE': 10,
 }
@@ -120,6 +131,11 @@ JWT_AUTH = {
     'JWT_EXPIRATION_DELTA': datetime.timedelta(days=14),
     'JWT_ALLOW_REFRESH': True
 }
+
+FILE_UPLOAD_HANDLERS = (
+    'django.core.files.uploadhandler.TemporaryFileUploadHandler',
+    'django.core.files.uploadhandler.MemoryFileUploadHandler'
+)
 
 MEDIA_ROOT = BASE_DIR+"/videos/upload/"
 MEDIA_URL = "/rtmp://192.168.1.78/"
