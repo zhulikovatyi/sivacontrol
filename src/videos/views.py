@@ -18,7 +18,8 @@ class VideoViewSet(viewsets.ModelViewSet):
     ordering = ('-id',)
 
     def create(self, request, *args, **kwargs):
-        self.file_name = default_storage.save(request.data['video'].name.replace(' ', '_'), ContentFile(request.data['video'].read()))
+        self.file_name = default_storage.save(request.data['video'].name.replace(' ', '_'),
+                                              ContentFile(request.data['video'].read()))
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         self.perform_create(serializer)
@@ -36,24 +37,25 @@ class VideoViewSet(viewsets.ModelViewSet):
         remove_video.delay(movie_name)
 
     def update(self, request, *args, **kwargs):
-        print 'file' in request.FILES, request.FILES, request.FILES['file'].name
-        return Response({})
         self.file_name = None
         if 'file' in request.FILES:
-            self.file_name = default_storage.save(request.data['video'].name.replace(' ', '_'), ContentFile(request.data['video'].read()))
+            self.file_name = default_storage.save(request.META['HTTP_X_FILE_NAME'],
+                                                  ContentFile(request.FILES['file'].read()))
         partial = kwargs.pop('partial', False)
         instance = self.get_object()
-        self.old_file_name = instance.url
+        self.old_file_name = instance.url.split('/')[-1]
         serializer = self.get_serializer(instance, data=request.data, partial=partial)
-        serializer.is_valid(raise_exception=True)
+        serializer.is_valid(raise_exception='file' not in request.FILES)
         self.perform_update(serializer)
         return Response(serializer.data)
 
     def perform_update(self, serializer):
-        super(VideoViewSet, self).perform_update(serializer)
         if self.file_name is not None:
-            move_video.delay(settings.MEDIA_ROOT+self.file_name, serializer.data['id'])
+            move_video.delay(settings.MEDIA_ROOT+self.file_name, serializer.instance.id)
             remove_video.delay(self.old_file_name)
+        else:
+            super(VideoViewSet, self).perform_update(serializer)
+
 
 
 class GenderViewSet(viewsets.ModelViewSet):
