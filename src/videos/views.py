@@ -1,8 +1,9 @@
-from rest_framework import viewsets
+from kombu import mixins
+from rest_framework import viewsets, mixins
 from rest_framework import filters
 
-from models import Banner, Gender
-from serializers import BannerSerializer, GenderSerializer
+from models import Banner, Gender, AgeGroup, BannerWeight
+from serializers import BannerSerializer, GenderSerializer, AgeGroupSerializer, BannerWeightSerializer
 from .tasks import move_video, remove_video
 from django.conf import settings
 from rest_framework.response import Response
@@ -67,3 +68,13 @@ class VideoViewSet(viewsets.ModelViewSet):
 class GenderViewSet(viewsets.ModelViewSet):
     queryset = Gender.objects.all()
     serializer_class = GenderSerializer
+
+
+class BannerWeightViewSet(viewsets.ModelViewSet):
+    queryset = BannerWeight.objects.all()
+    serializer_class = BannerWeightSerializer
+
+
+class AgeGroupViewSet(viewsets.ModelViewSet):
+    queryset = AgeGroup.objects.all()
+    serializer_class = AgeGroupSerializer

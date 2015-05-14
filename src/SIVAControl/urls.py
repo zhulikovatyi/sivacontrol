@@ -2,7 +2,7 @@ from django.conf.urls import patterns, include, url
 from django.contrib import admin
 from django.contrib.auth.models import User
 from rest_framework import routers, serializers, viewsets, decorators, response
-from videos.views import VideoViewSet, GenderViewSet
+from videos.views import VideoViewSet, GenderViewSet, BannerWeightViewSet, AgeGroupViewSet, BannerWeightViewSet
 from django.conf import settings
 from django.conf.urls.static import static
 
@@ -27,6 +27,8 @@ router = routers.DefaultRouter()
 router.register(r'users', UserViewSet)
 router.register(r'videos', VideoViewSet)
 router.register(r'genders', GenderViewSet)
+router.register(r'agegroup', AgeGroupViewSet)
+router.register(r'weight', BannerWeightViewSet)
 
 user_current = UserViewSet.as_view({
     'get': 'current'
