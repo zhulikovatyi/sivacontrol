@@ -1,15 +1,17 @@
 from __future__ import absolute_import
 from celery import shared_task
 from .models import Banner
+from django.conf import settings
 import requests
 import os
 
 
 @shared_task
 def move_video(path_to_video, identity):
+    f = open(path_to_video)
     r = requests.post(
-        "http://192.168.1.78:8888/movie",
-        files={'movie': open(path_to_video)}
+        settings.STREAM_API+"/movie",
+        files={'movie': f}
     )
     json = r.json()
     url = json['url']
@@ -24,7 +26,7 @@ def move_video(path_to_video, identity):
 @shared_task
 def remove_video(video_name):
     r = requests.delete(
-        "http://192.168.1.78:8888/movie",
+        settings.STREAM_API+"/movie",
         data={
             'movie_name': video_name
         }

@@ -78,10 +78,10 @@ CORS_ALLOW_HEADERS = (
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'siva',
-        'USER': 'advert_user',
-        'PASSWORD': 'advert_password',
-        'HOST': '192.168.1.74',
+        'NAME': 'advert',
+        'USER': 'web',
+        'PASSWORD': 'web',
+        'HOST': '10.0.3.9',
         'PORT': '5432'
     }
 }
@@ -139,3 +139,5 @@ FILE_UPLOAD_HANDLERS = (
 
 MEDIA_ROOT = BASE_DIR+"/videos/upload/"
 MEDIA_URL = "/rtmp://192.168.1.78/"
+
+STREAM_API = 'http://10.0.3.227:8888'

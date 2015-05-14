@@ -9,6 +9,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from django.core.files.storage import default_storage
 from django.core.files.base import ContentFile
+import os, uuid
 
 class VideoViewSet(viewsets.ModelViewSet):
     queryset = Banner.objects.all()
@@ -18,7 +19,8 @@ class VideoViewSet(viewsets.ModelViewSet):
     ordering = ('-id',)
 
     def create(self, request, *args, **kwargs):
-        self.file_name = default_storage.save(request.data['video'].name.replace(' ', '_'),
+        file_name, extension = os.path.splitext(request.data['video'].name)
+        self.file_name = default_storage.save(str(uuid.uuid4())+extension,
                                               ContentFile(request.data['video'].read()))
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
@@ -39,11 +41,15 @@ class VideoViewSet(viewsets.ModelViewSet):
     def update(self, request, *args, **kwargs):
         self.file_name = None
         if 'file' in request.FILES:
-            self.file_name = default_storage.save(request.META['HTTP_X_FILE_NAME'],
+            print request.META['HTTP_X_FILE_NAME']
+            file_name, extension = os.path.splitext(request.META['HTTP_X_FILE_NAME'])
+            self.file_name = default_storage.save(str(uuid.uuid4())+extension,
                                                   ContentFile(request.FILES['file'].read()))
-        partial = kwargs.pop('partial', False)
+        partial = kwargs.pop('partial', True)
         instance = self.get_object()
         self.old_file_name = instance.url.split('/')[-1]
+        if self.file_name is not None:
+            instance.url = 'Coming soon ...'
         serializer = self.get_serializer(instance, data=request.data, partial=partial)
         serializer.is_valid(raise_exception='file' not in request.FILES)
         self.perform_update(serializer)
