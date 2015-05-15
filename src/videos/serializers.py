@@ -7,7 +7,7 @@ class BannerWeightSerializer(serializers.ModelSerializer):
         fields = ('id', 'banner', 'age_group', 'gender', 'weight')
 
 class BannerSerializer(serializers.ModelSerializer):
-    age_gender_weights = BannerWeightSerializer(many=True)
+    age_gender_weights = BannerWeightSerializer(many=True, read_only=True)
     class Meta:
         model = Banner
         fields = ('id', 'title', 'url', 'is_active', 'age_gender_weights')

@@ -1,0 +1,66 @@
+[
+{
+  "fields": {
+    "stop_boundary": 6,
+    "start_boundary": 0
+  },
+  "model": "videos.agegroup",
+  "pk": 1
+},
+{
+  "fields": {
+    "stop_boundary": 12,
+    "start_boundary": 7
+  },
+  "model": "videos.agegroup",
+  "pk": 2
+},
+{
+  "fields": {
+    "stop_boundary": 17,
+    "start_boundary": 13
+  },
+  "model": "videos.agegroup",
+  "pk": 3
+},
+{
+  "fields": {
+    "stop_boundary": 25,
+    "start_boundary": 18
+  },
+  "model": "videos.agegroup",
+  "pk": 4
+},
+{
+  "fields": {
+    "stop_boundary": 34,
+    "start_boundary": 26
+  },
+  "model": "videos.agegroup",
+  "pk": 5
+},
+{
+  "fields": {
+    "stop_boundary": 47,
+    "start_boundary": 35
+  },
+  "model": "videos.agegroup",
+  "pk": 6
+},
+{
+  "fields": {
+    "stop_boundary": 60,
+    "start_boundary": 48
+  },
+  "model": "videos.agegroup",
+  "pk": 7
+},
+{
+  "fields": {
+    "stop_boundary": 80,
+    "start_boundary": 61
+  },
+  "model": "videos.agegroup",
+  "pk": 8
+}
+]
