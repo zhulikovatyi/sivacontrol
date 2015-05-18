@@ -1,0 +1,16 @@
+[
+{
+  "fields": {
+    "title": "Male"
+  },
+  "model": "videos.gender",
+  "pk": 1
+},
+{
+  "fields": {
+    "title": "Female"
+  },
+  "model": "videos.gender",
+  "pk": 2
+}
+]

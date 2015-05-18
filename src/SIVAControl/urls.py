@@ -34,6 +34,10 @@ user_current = UserViewSet.as_view({
     'get': 'current'
 })
 
+weight_values = BannerWeightViewSet.as_view({
+    'get': 'values'
+})
+
 urlpatterns = patterns('',
     # Examples:
     url(r'^', include(router.urls)),
@@ -42,4 +46,5 @@ urlpatterns = patterns('',
     url(r'^api/token/auth$', 'rest_framework_jwt.views.obtain_jwt_token'),
     url(r'^api/token/refresh$', 'rest_framework_jwt.views.refresh_jwt_token'),
     url(r'^user/current$', user_current, name='user-current'),
+    url(r'^weights/$', weight_values, name='weight-values'),
 ) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

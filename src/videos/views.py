@@ -1,6 +1,6 @@
 from kombu import mixins
 from rest_framework import viewsets, mixins
-from rest_framework import filters
+from rest_framework import filters, decorators, response
 
 from models import Banner, Gender, AgeGroup, BannerWeight
 from serializers import BannerSerializer, GenderSerializer, AgeGroupSerializer, BannerWeightSerializer
@@ -73,6 +73,10 @@ class GenderViewSet(viewsets.ModelViewSet):
 class BannerWeightViewSet(viewsets.ModelViewSet):
     queryset = BannerWeight.objects.all()
     serializer_class = BannerWeightSerializer
+
+    @decorators.detail_route(methods=['get', ])
+    def values(self, request):
+        return response.Response(BannerWeight.BANNER_WEIGHTS)
 
 
 class AgeGroupViewSet(viewsets.ModelViewSet):
