@@ -76,7 +76,8 @@ class BannerWeightViewSet(viewsets.ModelViewSet):
 
     @decorators.detail_route(methods=['get', ])
     def values(self, request):
-        return response.Response(BannerWeight.BANNER_WEIGHTS)
+        resp = [{'key': item[0], 'label': item[1]} for item in BannerWeight.BANNER_WEIGHTS]
+        return response.Response(resp)
 
 
 class AgeGroupViewSet(viewsets.ModelViewSet):
